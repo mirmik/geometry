@@ -63,7 +63,37 @@ namespace maho
                 auto n = _direction.norm();
                 return line3(_direction / n, _momentum / n);
             }
+
+            static constexpr line3 OX()
+            {
+                return line3(1, 0, 0, 0, 0, 0);
+            }
+
+            static constexpr line3 OY()
+            {
+                return line3(0, 1, 0, 0, 0, 0);
+            }
+
+            static constexpr line3 OZ()
+            {
+                return line3(0, 0, 1, 0, 0, 0);
+            }
         };
+
+        template <class T> constexpr line3<T> OX()
+        {
+            return line3<T>::OX();
+        }
+
+        template <class T> constexpr line3<T> OY()
+        {
+            return line3<T>::OY();
+        }
+
+        template <class T> constexpr line3<T> OZ()
+        {
+            return line3<T>::OZ();
+        }
     }
 }
 

@@ -58,7 +58,37 @@ namespace maho
             {
                 return _negdist;
             }
+
+            static constexpr plane3 OXY()
+            {
+                return plane3(0, 0, 1, 0);
+            }
+
+            static constexpr plane3 OXZ()
+            {
+                return plane3(0, 1, 0, 0);
+            }
+
+            static constexpr plane3 OYZ()
+            {
+                return plane3(1, 0, 0, 0);
+            }
         };
+
+        template <class T> constexpr plane3<T> OXY()
+        {
+            return plane3<T>::OXY();
+        }
+
+        template <class T> constexpr plane3<T> OXZ()
+        {
+            return plane3<T>::OXZ();
+        }
+
+        template <class T> constexpr plane3<T> OYZ()
+        {
+            return plane3<T>::OYZ();
+        }
     }
 }
 

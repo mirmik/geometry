@@ -1,5 +1,5 @@
-#ifndef MAHO_CGA_H
-#define MAHO_CGA_H
+#ifndef MAHO_CGA_POINT3_H
+#define MAHO_CGA_POINT3_H
 
 #include <maho/base.h>
 
@@ -123,7 +123,7 @@ namespace maho
 
             constexpr point3 unitized() const
             {
-                return point3(_xyz.unitized(), _w);
+                return point3(_xyz / _w, 1);
             }
         };
     }

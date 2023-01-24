@@ -1,5 +1,7 @@
-#ifndef MAHO_CGA_JOIN_H
-#define MAHO_CGA_JOIN_H
+#ifndef MAHO_CGA_JOIN3_H
+#define MAHO_CGA_JOIN3_H
+
+// Based on https://rigidgeometricalgebra.org/wiki/index.php?title=Join_and_meet
 
 #include <maho/cga/line3.h>
 #include <maho/cga/plane3.h>
@@ -9,7 +11,8 @@ namespace maho
 {
     namespace cga
     {
-        // Form a line as wedge product of two points.
+        // Line containing points p and q.
+        // Zero if p and q are coincident.
         template <class T>
         constexpr line3<T> join(const cga::point3<T> &p,
                                 const cga::point3<T> &q)
@@ -19,7 +22,8 @@ namespace maho
             return {direction, momentum};
         }
 
-        // Form a line as wedge product of two points.
+        // Line containing points p and q.
+        // Zero if p and q are coincident.
         // p and q are unitized.
         template <class T>
         constexpr line3<T> join(const pnt3<T> &p, const pnt3<T> &q)
@@ -29,7 +33,8 @@ namespace maho
             return {xyz, w};
         }
 
-        // Form a plane as wedge product of line and point.
+        // Plane containing line l and point p.
+        // Zero if p lies on the line l.
         template <class T>
         constexpr plane3<T> join(const line3<T> &l, const point3<T> &p)
         {
@@ -39,6 +44,7 @@ namespace maho
         }
 
         // Form a plane as wedge product of three points.
+        // Zero if two or more points are coincident.
         template <class T>
         constexpr plane3<T>
         join(const point3<T> &p, const point3<T> &q, const point3<T> &r)

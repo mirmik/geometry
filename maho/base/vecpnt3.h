@@ -55,6 +55,11 @@ namespace maho
     {
         return vec3<decltype(p.x() / v)>(p.x() / v, p.y() / v, p.z() / v);
     }
+
+    template <class A> constexpr auto operator-(const vec3<A> &p)
+    {
+        return vec3<decltype(-p.x())>(-p.x(), -p.y(), -p.z());
+    }
 }
 
 #endif // MAHO_BASE_VECPNT3_H
