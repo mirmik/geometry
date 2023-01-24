@@ -12,6 +12,7 @@ licant.cxx_application("runtests",
                        sources=[
                            "tests/*.cpp",
                            "tests/base/*.cpp",
+                           "tests/rga/*.cpp",
                            "tests/cga/*.cpp",
                        ],
                        cxxstd="c++20",

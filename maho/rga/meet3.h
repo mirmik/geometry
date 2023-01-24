@@ -1,14 +1,16 @@
-#ifndef MAHO_CGA_MEET3_H
-#define MAHO_CGA_MEET3_H
+#ifndef MAHO_RGA_MEET3_H
+#define MAHO_RGA_MEET3_H
+
+// Based on https://rigidgeometricalgebra.org/wiki/index.php?title=Join_and_meet
 
 #include <maho/base.h>
-#include <maho/cga/line3.h>
-#include <maho/cga/plane3.h>
-#include <maho/cga/point3.h>
+#include <maho/rga/line3.h>
+#include <maho/rga/plane3.h>
+#include <maho/rga/point3.h>
 
 namespace maho
 {
-    namespace cga
+    namespace rga
     {
         // Line where planes g and h intersect.
         // Direction is zero if g and h are parallel.

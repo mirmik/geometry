@@ -1,21 +1,21 @@
-#ifndef MAHO_CGA_JOIN3_H
-#define MAHO_CGA_JOIN3_H
+#ifndef MAHO_RGA_JOIN3_H
+#define MAHO_RGA_JOIN3_H
 
 // Based on https://rigidgeometricalgebra.org/wiki/index.php?title=Join_and_meet
 
-#include <maho/cga/line3.h>
-#include <maho/cga/plane3.h>
-#include <maho/cga/point3.h>
+#include <maho/rga/line3.h>
+#include <maho/rga/plane3.h>
+#include <maho/rga/point3.h>
 
 namespace maho
 {
-    namespace cga
+    namespace rga
     {
         // Line containing points p and q.
         // Zero if p and q are coincident.
         template <class T>
-        constexpr line3<T> join(const cga::point3<T> &p,
-                                const cga::point3<T> &q)
+        constexpr line3<T> join(const rga::point3<T> &p,
+                                const rga::point3<T> &q)
         {
             auto direction = p.w() * q.xyz() - q.w() * p.xyz();
             auto momentum = cross(p.xyz(), q.xyz());
@@ -43,7 +43,7 @@ namespace maho
             return {normal, negoffset};
         }
 
-        // Form a plane as wedge product of three points.
+        // Plane containing points p, q, r.
         // Zero if two or more points are coincident.
         template <class T>
         constexpr plane3<T>
@@ -54,4 +54,4 @@ namespace maho
     }
 }
 
-#endif // MAHO_CGA_JOIN_H
+#endif // MAHO_RGA_JOIN_H

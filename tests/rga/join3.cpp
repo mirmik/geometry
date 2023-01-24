@@ -1,10 +1,10 @@
 #include <doctest/doctest.h>
-#include <maho/cga/join3.h>
+#include <maho/rga/join3.h>
 
 TEST_CASE("Line containing points p and q.")
 {
-    constexpr auto a = maho::cga::point3<float>(0, 0, 1);
-    constexpr auto b = maho::cga::point3<float>(10, 0, 1);
+    constexpr auto a = maho::rga::point3<float>(0, 0, 1);
+    constexpr auto b = maho::rga::point3<float>(10, 0, 1);
     constexpr auto l = join(a, b);
     CHECK_EQ(l.direction(), maho::vec3<float>(10, 0, 0));
     CHECK_EQ(l.momentum(), maho::vec3<float>(0, 10, 0));
@@ -15,10 +15,10 @@ TEST_CASE("Line containing points p and q.")
 
 TEST_CASE("Plane containing points p, q, r.")
 {
-    constexpr auto a = maho::cga::point3<double>(0, 0, 1);
-    constexpr auto b = maho::cga::point3<double>(10, 0, 1);
-    constexpr auto c = maho::cga::point3<double>(0, 10, 1);
-    constexpr maho::cga::plane3<double> p = join(a, b, c);
+    constexpr auto a = maho::rga::point3<double>(0, 0, 1);
+    constexpr auto b = maho::rga::point3<double>(10, 0, 1);
+    constexpr auto c = maho::rga::point3<double>(0, 10, 1);
+    constexpr maho::rga::plane3<double> p = join(a, b, c);
     CHECK_EQ(p.normal(), maho::vec3<double>(0, 0, 100));
     CHECK_EQ(p.weight(), -100);
     constexpr auto up = p.unitized();

@@ -1,13 +1,15 @@
-#ifndef MAHO_CGA_PERPENDICULAR3_H
-#define MAHO_CGA_PERPENDICULAR3_H
+#ifndef MAHO_RGA_PERPENDICULAR3_H
+#define MAHO_RGA_PERPENDICULAR3_H
 
-#include <maho/cga/line3.h>
-#include <maho/cga/plane3.h>
-#include <maho/cga/point3.h>
+// Based on https://rigidgeometricalgebra.org/wiki/index.php?title=Join_and_meet
+
+#include <maho/rga/line3.h>
+#include <maho/rga/plane3.h>
+#include <maho/rga/point3.h>
 
 namespace maho
 {
-    namespace cga
+    namespace rga
     {
         // Line perpendicular to plane g passing through point p.
         template <class T>
@@ -39,4 +41,4 @@ namespace maho
     }
 }
 
-#endif // MAHO_CGA_PERPENDICULAR3_H
+#endif // MAHO_RGA_PERPENDICULAR3_H

@@ -1,11 +1,11 @@
-#ifndef MAHO_CGA_POINT3_H
-#define MAHO_CGA_POINT3_H
+#ifndef MAHO_RGA_POINT3_H
+#define MAHO_RGA_POINT3_H
 
 #include <maho/base.h>
 
 namespace maho
 {
-    namespace cga
+    namespace rga
     {
         template <class T> class point3
         {
@@ -133,7 +133,7 @@ namespace maho
 namespace std
 {
     template <class T>
-    std::ostream &operator<<(std::ostream &os, const maho::cga::point3<T> &p)
+    std::ostream &operator<<(std::ostream &os, const maho::rga::point3<T> &p)
     {
         os << "(" << p.x() << "," << p.y() << "," << p.z() << "," << p.w()
            << ")";
@@ -141,4 +141,4 @@ namespace std
     }
 }
 
-#endif // MAHO_CGA_H
+#endif // MAHO_RGA_H

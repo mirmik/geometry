@@ -1,10 +1,10 @@
-#ifndef MAHO_CGA_PLANE3_H
-#define MAHO_CGA_PLANE3_H
+#ifndef MAHO_RGA_PLANE3_H
+#define MAHO_RGA_PLANE3_H
 
 #include <maho/base.h>
 namespace maho
 {
-    namespace cga
+    namespace rga
     {
         template <class T> class plane3
         {
@@ -92,4 +92,4 @@ namespace maho
     }
 }
 
-#endif // MAHO_CGA_PLANE3_H
+#endif // MAHO_RGA_PLANE3_H

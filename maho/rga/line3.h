@@ -1,11 +1,11 @@
-#ifndef MAHO_CGA_LINE3_H
-#define MAHO_CGA_LINE3_H
+#ifndef MAHO_RGA_LINE3_H
+#define MAHO_RGA_LINE3_H
 
 #include <maho/base.h>
 
 namespace maho
 {
-    namespace cga
+    namespace rga
     {
         // Line is bivector in CL(3,1) and trivector in CL(4,1).
         template <class T> class line3
