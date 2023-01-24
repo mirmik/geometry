@@ -1,0 +1,1 @@
+Based on  Dr. Eric Lengyel site: https://projectivegeometricalgebra.org/
