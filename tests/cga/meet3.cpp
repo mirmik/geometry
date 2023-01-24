@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>
 #include <maho/cga/meet3.h>
 
-TEST_CASE("line when meets two planes")
+TEST_CASE("Line where planes g and h intersect.")
 {
     constexpr maho::cga::plane3<float> p1({1, 0, 0}, -1);
     constexpr maho::cga::plane3<float> p2({0, 1, 0}, -1);
@@ -10,7 +10,7 @@ TEST_CASE("line when meets two planes")
     CHECK_EQ(l.momentum(), maho::vec3<float>(-1, 1, 0));
 }
 
-TEST_CASE("point when line meet plane")
+TEST_CASE("Point where line l intersects plane g.")
 {
     constexpr maho::cga::plane3<float> p1({1, 0, 0}, -1);
     constexpr maho::cga::line3<float> l1({1, 0, 0}, {0, 0, 0});
