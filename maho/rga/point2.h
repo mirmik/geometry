@@ -19,7 +19,7 @@ namespace maho
             constexpr point2(const point2 &p) : _xy(p._xy), _z(p._z) {}
             constexpr point2(const pnt2<T> &p) : _xy(p), _z(1) {}
             constexpr point2(const vec2<T> &v) : _xy(v), _z(0) {}
-            constexpr point2(const vec2<T> &v, T z) : _xy(v), _z(z) {}
+            constexpr point2(const vec2<T> &v, T w) : _xy(v), _z(w) {}
             constexpr point2 &operator=(const point2 &p)
             {
                 _xy = p._xy;
@@ -27,7 +27,7 @@ namespace maho
                 return *this;
             }
 
-            constexpr point2 &operator=(const pnt2<T> &p)
+            constexpr point2 &operator=(const pnt3<T> &p)
             {
                 _xy = p;
                 _z = 1;
@@ -53,10 +53,71 @@ namespace maho
 
             constexpr T z() const
             {
+                return _xy.z();
+            }
+
+            constexpr T &x()
+            {
+                return _xy.x();
+            }
+
+            constexpr T &y()
+            {
+                return _xy.y();
+            }
+
+            constexpr T &z()
+            {
+                return _xy.z();
+            }
+
+            constexpr vec2<T> xyz() const
+            {
+                return _xy;
+            }
+
+            constexpr vec2<T> &xyz()
+            {
+                return _xy;
+            }
+
+            constexpr vec2<T> bulk() const
+            {
+                return _xy;
+            }
+
+            constexpr vec2<T> &bulk()
+            {
+                return _xy;
+            }
+
+            constexpr T weight() const
+            {
                 return _z;
+            }
+
+            constexpr T &weight()
+            {
+                return _z;
+            }
+
+            constexpr bool operator==(const point2 &p) const
+            {
+                return _xy == p._xy && _z == p._z;
+            }
+
+            constexpr bool operator!=(const point2 &p) const
+            {
+                return !(*this == p);
+            }
+
+            constexpr point2 unitized() const
+            {
+                return point2(_xy / _z, 1);
             }
         };
     }
+
 }
 
 namespace std

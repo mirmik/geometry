@@ -12,9 +12,9 @@ namespace maho
 
     public:
         constexpr vec2() : _x(0), _y(0) {}
-        constexpr vec2(T x, T y, T z) : _x(x), _y(y) {}
-        constexpr vec2(const vec3 &v) : _x(v._x), _y(v._y) {}
-        constexpr vec2 &operator=(const vec3 &v)
+        constexpr vec2(T x, T y) : _x(x), _y(y) {}
+        constexpr vec2(const vec2 &v) : _x(v._x), _y(v._y) {}
+        constexpr vec2 &operator=(const vec2 &v)
         {
             _x = v._x;
             _y = v._y;
@@ -67,7 +67,7 @@ namespace std
 {
     template <class T> ostream &operator<<(ostream &os, const maho::vec2<T> &v)
     {
-        os << "(" << v.x() << "," << v.y() < < < < ")";
+        os << "(" << v.x() << "," << v.y() << ")";
         return os;
     }
 }
