@@ -76,8 +76,9 @@ namespace maho
                 return plane3(1, 0, 0, 0);
             }
 
-            // nonbased
-            constexpr static plane3 construct(line3<T> l1, vec3<T> direction);
+            // Construct a plane from a line and a direction vector.
+            constexpr static plane3 construct(const line3<T> &l,
+                                              const vec3<T> &direction);
         };
 
         template <class T> constexpr plane3<T> OXY()
@@ -105,11 +106,14 @@ namespace maho
     namespace rga
     {
         template <class T>
-        constexpr plane3<T> plane3<T>::construct(line3<T> l1, vec3<T> direction)
+        constexpr plane3<T> plane3<T>::construct(const line3<T> &l,
+                                                 const vec3<T> &direction)
         {
-            auto o = project_to_origin(l1).unitized();
-            auto p = point3<T>(pnt3(o.xyz()) + direction);
-            return join(l1, p);
+            // Use the projection of the line to the origin to get point on the
+            // plane.
+            // TODO: Simpilify this.
+            auto p = project_to_origin(l) + direction;
+            return join(l, p);
         }
     }
 }

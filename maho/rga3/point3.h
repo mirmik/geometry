@@ -126,6 +126,12 @@ namespace maho
                 return point3(_xyz / _w, 1);
             }
         };
+
+        template <class T>
+        constexpr point3<T> operator+(const point3<T> &p, const vec3<T> &v)
+        {
+            return point3<T>(p.xyz() + v * p.w(), p.w());
+        }
     }
 
 }
