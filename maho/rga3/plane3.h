@@ -6,6 +6,8 @@ namespace maho
 {
     namespace rga
     {
+        template <class T> class line3;
+
         template <class T> class plane3
         {
             vec3<T> _normal;
@@ -73,6 +75,9 @@ namespace maho
             {
                 return plane3(1, 0, 0, 0);
             }
+
+            // nonbased
+            constexpr static plane3 construct(line3<T> l1, vec3<T> direction);
         };
 
         template <class T> constexpr plane3<T> OXY()
@@ -88,6 +93,23 @@ namespace maho
         template <class T> constexpr plane3<T> OYZ()
         {
             return plane3<T>::OYZ();
+        }
+    }
+}
+
+#include <maho/rga3/line3.h>
+#include <maho/rga3/projection3.h>
+
+namespace maho
+{
+    namespace rga
+    {
+        template <class T>
+        constexpr plane3<T> plane3<T>::construct(line3<T> l1, vec3<T> direction)
+        {
+            auto o = project_to_origin(l1).unitized();
+            auto p = point3<T>(pnt3(o.xyz()) + direction);
+            return join(l1, p);
         }
     }
 }

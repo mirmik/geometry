@@ -37,3 +37,25 @@ TEST_CASE("Plane perpendicular to plane g containing line l.")
     CHECK_EQ(pl2.normal(), maho::vec3<double>(0, -1, 0));
     CHECK_EQ(pl2.weight(), 0);
 }
+
+TEST_CASE("Line perpendicular between two lines a, b.")
+{
+    {
+        constexpr auto a = maho::rga::join(maho::rga::point3<double>(0, 0, 0),
+                                           maho::rga::point3<double>(1, 0, 0));
+        constexpr auto b = maho::rga::join(maho::rga::point3<double>(0, 0, 1),
+                                           maho::rga::point3<double>(0, 1, 1));
+        constexpr auto l = maho::rga::perpendicular(a, b).unitized();
+        CHECK_EQ(l.direction(), maho::vec3<double>(0, 0, -1));
+        CHECK_EQ(l.momentum(), maho::vec3<double>(0, 0, 0));
+    }
+    {
+        constexpr auto a = maho::rga::join(maho::rga::point3<double>(2, 2, 5),
+                                           maho::rga::point3<double>(1, 2, 5));
+        constexpr auto b = maho::rga::join(maho::rga::point3<double>(0, 0, 1),
+                                           maho::rga::point3<double>(0, 0, 0));
+        constexpr auto l = maho::rga::perpendicular(a, b).unitized();
+        CHECK_EQ(l.direction(), maho::vec3<double>(0, 1, 0));
+        CHECK_EQ(l.momentum(), maho::vec3<double>(-5, 0, 0));
+    }
+}

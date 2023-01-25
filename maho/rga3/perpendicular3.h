@@ -38,6 +38,19 @@ namespace maho
             auto negoffset = -dot(l.m(), g.xyz());
             return {normal, negoffset};
         }
+
+        // Non based:
+        // Line perpendicular between two lines a, b.
+        template <class T>
+        constexpr line3<T> perpendicular(const line3<T> &a, const line3<T> &b)
+        {
+            auto au = a.unitized();
+            auto bu = b.unitized();
+            auto direction = cross(au.v(), bu.v());
+            auto p1 = plane3<T>::construct(au, direction);
+            auto p2 = plane3<T>::construct(bu, direction);
+            return meet(p1, p2);
+        }
     }
 }
 
