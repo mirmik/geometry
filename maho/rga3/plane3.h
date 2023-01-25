@@ -1,6 +1,14 @@
 #ifndef MAHO_RGA_PLANE3_H
 #define MAHO_RGA_PLANE3_H
 
+/// @file maho/rga3/plane3.h
+
+/// @class maho::rga::plane3
+/// @brief 3D space plane in RGA and CGA representation.
+///
+/// RGA (trivector)  :
+/// CGA (quadvector) :
+
 #include <maho/base.h>
 namespace maho
 {

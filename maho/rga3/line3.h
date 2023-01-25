@@ -1,6 +1,14 @@
 #ifndef MAHO_RGA_LINE3_H
 #define MAHO_RGA_LINE3_H
 
+/// @file maho/rga3/line3.h
+
+/// @class maho::rga::line3
+/// @brief Line in 3D space.
+///
+/// RGA (bivector) : l = vx*e41 + vy*e42 + vz*e43 + mx*e23 + my*e31 + mz*e12.
+/// CGA (trivector):
+
 #include <maho/base.h>
 
 namespace maho
@@ -8,11 +16,6 @@ namespace maho
     namespace rga
     {
         template <class T> class point3;
-
-        // RGA (bivector):  l = vx*e41 + vy*e42 + vz*e43 + mx*e23 + my*e31 +
-        // mz*e12.
-        //
-        // CGA (trivector):
         template <class T> class line3
         {
             vec3<T> _direction = {};

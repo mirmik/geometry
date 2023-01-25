@@ -1,6 +1,14 @@
 #ifndef MAHO_RGA_POINT3_H
 #define MAHO_RGA_POINT3_H
 
+/// @file maho/rga3/point3.h
+
+/// @class maho::rga::point3
+/// @brief 3D space point in RGA and CGA representation.
+///
+/// RGA (vector)  : p = x*e1  + y*e2  + z*e3  + w*e4
+/// CGA (bivector): p = x*e15 + y*e25 + z*e35 + w*e45
+
 #include <maho/base.h>
 #include <maho/ga0/magnitude.h>
 
@@ -8,7 +16,6 @@ namespace maho
 {
     namespace rga
     {
-        // RGA: p = x*e1 + y*e2 + z*e3 + w*e4
         template <class T> class point3
         {
             vec3<T> _xyz;
