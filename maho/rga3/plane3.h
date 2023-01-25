@@ -6,8 +6,8 @@
 /// @class maho::rga::plane3
 /// @brief 3D space plane in RGA and CGA representation.
 ///
-/// RGA (trivector)  :
-/// CGA (quadvector) :
+/// RGA (trivector)  : g = x*e423 + y*e431 + z*e412 + w*e321
+/// CGA (quadvector) : g = x*e4235 + y*e4315 + z*e4125 + w*e3215
 
 #include <maho/base.h>
 namespace maho

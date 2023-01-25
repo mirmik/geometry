@@ -1,7 +1,15 @@
 #ifndef MAHO_CGA_SPHERE3_H
 #define MAHO_CGA_SPHERE3_H
 
+/// @file maho/rga3/circle3.h
 // Based on https://conformalgeometricalgebra.org/wiki/index.php?title=Sphere
+
+/// @class maho::cga::sphere3
+/// @brief 3D space sphere in CGA representation.
+///
+/// CGA (quadvector) : g = u*e1234 + x*e4235 + y*e4315 + z*e4125 + w*e3215
+/// Sphere with center (x,y,z) and radius r is formulated as:
+/// g = -e1234 + x*e4235 + y*e4315 + z*e4125 + (r^2-p^2)/2*e3215
 
 #include <maho/base.h>
 

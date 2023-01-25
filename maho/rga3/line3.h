@@ -7,7 +7,8 @@
 /// @brief Line in 3D space.
 ///
 /// RGA (bivector) : l = vx*e41 + vy*e42 + vz*e43 + mx*e23 + my*e31 + mz*e12.
-/// CGA (trivector):
+/// CGA (trivector): l = vx*e415 + vy*e425 + vz*e435 + mx*e235 + my*e315 +
+/// mz*e125.
 
 #include <maho/base.h>
 

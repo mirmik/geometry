@@ -1,6 +1,14 @@
 #ifndef MAHO_CGA_CIRCLE3_H
 #define MAHO_CGA_CIRCLE3_H
 
+/// @file maho/cga3/circle3.h
+
+/// @class maho::rga::circle3
+/// @brief 3D space circle in CGA representation.
+///
+/// CGA (trivector) : c = gx*e423 + gy*e431 + gz*e412 + gw*e321 + vx*e415 +
+/// vy*e425 + vz*e435 + mx*e235 + my*e315 + mz*e125.
+
 #include <maho/base.h>
 #include <maho/rga3/line3.h>
 #include <maho/rga3/meet3.h>
