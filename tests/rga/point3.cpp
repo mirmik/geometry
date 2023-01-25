@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <maho/rga/point3.h>
+#include <maho/rga3/point3.h>
 
 TEST_CASE("point3")
 {

@@ -2,10 +2,10 @@
 #define MAHO_CGA_CIRCLE3_H
 
 #include <maho/base.h>
-#include <maho/rga/line3.h>
-#include <maho/rga/meet3.h>
-#include <maho/rga/plane3.h>
-#include <maho/rga/point3.h>
+#include <maho/rga3/line3.h>
+#include <maho/rga3/meet3.h>
+#include <maho/rga3/plane3.h>
+#include <maho/rga3/point3.h>
 
 namespace maho
 {
@@ -93,8 +93,8 @@ namespace maho
     }
 }
 
-#include <maho/cga/meet3.h>
-#include <maho/cga/sphere3.h>
+#include <maho/cga3/meet3.h>
+#include <maho/cga3/sphere3.h>
 
 namespace maho
 {

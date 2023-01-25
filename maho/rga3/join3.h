@@ -3,9 +3,9 @@
 
 // Based on https://rigidgeometricalgebra.org/wiki/index.php?title=Join_and_meet
 
-#include <maho/rga/line3.h>
-#include <maho/rga/plane3.h>
-#include <maho/rga/point3.h>
+#include <maho/rga3/line3.h>
+#include <maho/rga3/plane3.h>
+#include <maho/rga3/point3.h>
 
 namespace maho
 {

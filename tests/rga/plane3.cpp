@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <maho/rga/plane3.h>
+#include <maho/rga3/plane3.h>
 
 TEST_CASE("plane3")
 {

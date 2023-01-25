@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>
-#include <maho/rga/join3.h>
-#include <maho/rga/meet3.h>
-#include <maho/rga/perpendicular3.h>
+#include <maho/rga3/join3.h>
+#include <maho/rga3/meet3.h>
+#include <maho/rga3/perpendicular3.h>
 
 TEST_CASE("Line perpendicular to plane g passing through point p.")
 {

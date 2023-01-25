@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>
-#include <maho/cga/meet3.h>
-#include <maho/rga/plane3.h>
+#include <maho/cga3/meet3.h>
+#include <maho/rga3/plane3.h>
 
 TEST_CASE("Circle where sphere s and plane g intersect.")
 {

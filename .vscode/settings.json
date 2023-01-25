@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "atomic": "cpp",
+        "vector": "cpp",
+        "exception": "cpp",
+        "fstream": "cpp",
+        "iosfwd": "cpp",
+        "mutex": "cpp",
+        "new": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "stdexcept": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
+    }
+}

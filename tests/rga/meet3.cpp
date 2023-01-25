@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <maho/rga/meet3.h>
+#include <maho/rga3/meet3.h>
 
 TEST_CASE("Line where planes g and h intersect.")
 {

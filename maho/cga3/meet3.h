@@ -1,11 +1,11 @@
 #ifndef MAHO_CGA_MEET3_H
 #define MAHO_CGA_MEET3_H
 
-#include <maho/cga/circle3.h>
-#include <maho/cga/sphere3.h>
-#include <maho/rga/line3.h>
-#include <maho/rga/plane3.h>
-#include <maho/rga/point3.h>
+#include <maho/cga3/circle3.h>
+#include <maho/cga3/sphere3.h>
+#include <maho/rga3/line3.h>
+#include <maho/rga3/plane3.h>
+#include <maho/rga3/point3.h>
 
 namespace maho
 {

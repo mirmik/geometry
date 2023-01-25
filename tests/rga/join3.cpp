@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <maho/rga/join3.h>
+#include <maho/rga3/join3.h>
 
 TEST_CASE("Line containing points p and q.")
 {
