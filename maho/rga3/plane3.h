@@ -43,15 +43,8 @@ namespace maho
                 return *this;
             }
 
-            constexpr vec3<T> normal() const
-            {
-                return _normal;
-            }
-
-            constexpr T weight() const
-            {
-                return _negdist;
-            }
+            constexpr vec3<T> normal() const { return _normal; }
+            constexpr T weight() const { return _negdist; }
 
             constexpr plane3 unitized() const
             {
@@ -59,35 +52,14 @@ namespace maho
                 return plane3(_normal / n, _negdist / n);
             }
 
-            constexpr vec3<T> xyz() const
-            {
-                return _normal;
-            }
+            constexpr vec3<T> xyz() const { return _normal; }
+            constexpr T w() const { return _negdist; }
 
-            constexpr T w() const
-            {
-                return _negdist;
-            }
+            static constexpr plane3 OXY() { return plane3(0, 0, 1, 0); }
+            static constexpr plane3 OXZ() { return plane3(0, 1, 0, 0); }
+            static constexpr plane3 OYZ() { return plane3(1, 0, 0, 0); }
 
-            static constexpr plane3 OXY()
-            {
-                return plane3(0, 0, 1, 0);
-            }
-
-            static constexpr plane3 OXZ()
-            {
-                return plane3(0, 1, 0, 0);
-            }
-
-            static constexpr plane3 OYZ()
-            {
-                return plane3(1, 0, 0, 0);
-            }
-
-            bool is_infinite() const
-            {
-                return _normal == vec3<T>{0, 0, 0};
-            }
+            bool is_infinite() const { return _normal == vec3<T>{0, 0, 0}; }
 
             /*bool is_unitized(T eps = 1e-5) const
             {

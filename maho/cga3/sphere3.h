@@ -42,20 +42,11 @@ namespace maho
                 return *this;
             }
 
-            constexpr vec3<T> xyz() const
-            {
-                return _xyz;
-            }
+            constexpr vec3<T> xyz() const { return _xyz; }
 
-            constexpr T w() const
-            {
-                return _w;
-            }
+            constexpr T w() const { return _w; }
 
-            constexpr T u() const
-            {
-                return _u;
-            }
+            constexpr T u() const { return _u; }
 
             constexpr sphere3 unitized() const
             {
@@ -63,10 +54,7 @@ namespace maho
             }
 
             // Returns the center of the sphere if unitized.
-            constexpr vec3<T> center() const
-            {
-                return _xyz;
-            }
+            constexpr vec3<T> center() const { return _xyz; }
 
             // Returns the radius of the sphere if unitized.
             // From equation: _w = - (p^2 - r^2) / 2

@@ -45,25 +45,13 @@ namespace maho
                 return *this;
             }
 
-            constexpr vec3<T> g() const
-            {
-                return _g;
-            }
+            constexpr vec3<T> g() const { return _g; }
 
-            constexpr T w() const
-            {
-                return _w;
-            }
+            constexpr T w() const { return _w; }
 
-            constexpr vec3<T> v() const
-            {
-                return _v;
-            }
+            constexpr vec3<T> v() const { return _v; }
 
-            constexpr vec3<T> m() const
-            {
-                return _m;
-            }
+            constexpr vec3<T> m() const { return _m; }
 
             constexpr rga::point3<T> flat_center() const
             {

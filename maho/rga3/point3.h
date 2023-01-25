@@ -29,6 +29,12 @@ namespace maho
             constexpr point3(const pnt3<T> &p) : _xyz(p), _w(1) {}
             constexpr point3(const vec3<T> &v) : _xyz(v), _w(0) {}
             constexpr point3(const vec3<T> &v, T w) : _xyz(v), _w(w) {}
+
+            constexpr vec3<T> xyz() const { return _xyz; }
+            constexpr T w() const { return _w; }
+            constexpr vec3<T> bulk() const { return _xyz; }
+            constexpr T weight() const { return _w; }
+
             constexpr point3 &operator=(const point3 &p)
             {
                 _xyz = p._xyz;
@@ -50,26 +56,6 @@ namespace maho
                 return *this;
             }
 
-            constexpr vec3<T> xyz() const
-            {
-                return _xyz;
-            }
-
-            constexpr T w() const
-            {
-                return _w;
-            }
-
-            constexpr vec3<T> bulk() const
-            {
-                return _xyz;
-            }
-
-            constexpr T weight() const
-            {
-                return _w;
-            }
-
             constexpr bool operator==(const point3 &p) const
             {
                 return _xyz == p._xyz && _w == p._w;
@@ -80,20 +66,11 @@ namespace maho
                 return !(*this == p);
             }
 
-            constexpr point3 unitized() const
-            {
-                return point3(_xyz / _w, 1);
-            }
+            constexpr point3 unitized() const { return point3(_xyz / _w, 1); }
 
-            bool is_infinite()
-            {
-                return _w == 0;
-            }
+            bool is_infinite() { return _w == 0; }
 
-            bool is_unitized()
-            {
-                return _w == 1;
-            }
+            bool is_unitized() { return _w == 1; }
         };
 
         template <class T>

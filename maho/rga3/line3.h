@@ -39,41 +39,18 @@ namespace maho
             {
             }
 
+            constexpr vec3<T> direction() const { return _direction; }
+            constexpr vec3<T> momentum() const { return _momentum; }
+            constexpr vec3<T> weight() const { return _direction; }
+            constexpr vec3<T> bulk() const { return _momentum; }
+            constexpr vec3<T> v() const { return _direction; }
+            constexpr vec3<T> m() const { return _momentum; }
+
             constexpr line3 &operator=(const line3 &l)
             {
                 _direction = l._direction;
                 _momentum = l._momentum;
                 return *this;
-            }
-
-            constexpr vec3<T> direction() const
-            {
-                return _direction;
-            }
-
-            constexpr vec3<T> momentum() const
-            {
-                return _momentum;
-            }
-
-            constexpr vec3<T> weight() const
-            {
-                return _direction;
-            }
-
-            constexpr vec3<T> bulk() const
-            {
-                return _momentum;
-            }
-
-            constexpr vec3<T> v() const
-            {
-                return _direction;
-            }
-
-            constexpr vec3<T> m() const
-            {
-                return _momentum;
             }
 
             constexpr line3 unitized() const
@@ -82,51 +59,28 @@ namespace maho
                 return line3(_direction / n, _momentum / n);
             }
 
-            static constexpr line3 OX()
-            {
-                return line3(1, 0, 0, 0, 0, 0);
-            }
-
-            static constexpr line3 OY()
-            {
-                return line3(0, 1, 0, 0, 0, 0);
-            }
-
-            static constexpr line3 OZ()
-            {
-                return line3(0, 0, 1, 0, 0, 0);
-            }
-
             constexpr line3 operator-() const
             {
                 return line3(-_direction, -_momentum);
             }
 
-            bool is_infinite()
-            {
-                return _direction == vec3<T>{0, 0, 0};
-            }
+            bool is_infinite() { return _direction == vec3<T>{0, 0, 0}; }
 
             /*bool is_unitized(T eps = 1e-5) const
             {
                 return _direction.norm2() < eps;
             }*/
+
+            static constexpr line3 OX() { return line3(1, 0, 0, 0, 0, 0); }
+            static constexpr line3 OY() { return line3(0, 1, 0, 0, 0, 0); }
+            static constexpr line3 OZ() { return line3(0, 0, 1, 0, 0, 0); }
         };
 
-        template <class T> constexpr line3<T> OX()
-        {
-            return line3<T>::OX();
-        }
+        template <class T> constexpr line3<T> OX() { return line3<T>::OX(); }
 
-        template <class T> constexpr line3<T> OY()
-        {
-            return line3<T>::OY();
-        }
+        template <class T> constexpr line3<T> OY() { return line3<T>::OY(); }
 
-        template <class T> constexpr line3<T> OZ()
-        {
-            return line3<T>::OZ();
-        }
+        template <class T> constexpr line3<T> OZ() { return line3<T>::OZ(); }
     }
 }
 
