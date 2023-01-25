@@ -42,6 +42,16 @@ namespace maho
             auto negoffset = -dot(l.m(), p.xyz());
             return {normal, negoffset};
         }
+        // Plane containing line l and infinite point d.
+        // It can be interpreted as line extending from d.
+        // Zero if d lies on the line l.
+        template <class T>
+        constexpr plane3<T> join(const line3<T> &l, const vec3<T> &d)
+        {
+            auto normal = cross(l.v(), d);
+            auto negoffset = -dot(l.m(), d);
+            return {normal, negoffset};
+        }
 
         // Plane containing points p, q, r.
         // Zero if two or more points are coincident.

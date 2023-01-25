@@ -39,14 +39,14 @@ namespace maho
             return {normal, negoffset};
         }
 
-        // Non based:
+        // * Non based:
         // Line perpendicular between two lines a, b.
         template <class T>
         constexpr line3<T> perpendicular(const line3<T> &a, const line3<T> &b)
         {
-            auto direction = cross(a.v(), b.v());
-            auto p1 = plane3<T>::construct(a, direction);
-            auto p2 = plane3<T>::construct(b, direction);
+            auto infpoint = cross(a.direction(), b.direction());
+            auto p1 = join(a, infpoint);
+            auto p2 = join(b, infpoint);
             return meet(p1, p2);
         }
     }

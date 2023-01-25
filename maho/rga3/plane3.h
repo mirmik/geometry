@@ -76,9 +76,15 @@ namespace maho
                 return plane3(1, 0, 0, 0);
             }
 
-            // Construct a plane from a line and a direction vector.
-            constexpr static plane3 construct(const line3<T> &l,
-                                              const vec3<T> &direction);
+            bool is_infinite() const
+            {
+                return _normal == vec3<T>{0, 0, 0};
+            }
+
+            /*bool is_unitized(T eps = 1e-5) const
+            {
+                return _normal.norm2() < eps;
+            }*/
         };
 
         template <class T> constexpr plane3<T> OXY()
@@ -94,26 +100,6 @@ namespace maho
         template <class T> constexpr plane3<T> OYZ()
         {
             return plane3<T>::OYZ();
-        }
-    }
-}
-
-#include <maho/rga3/line3.h>
-#include <maho/rga3/projection3.h>
-
-namespace maho
-{
-    namespace rga
-    {
-        template <class T>
-        constexpr plane3<T> plane3<T>::construct(const line3<T> &l,
-                                                 const vec3<T> &direction)
-        {
-            // Use the projection of the line to the origin to get point on the
-            // plane.
-            // TODO: Simpilify this.
-            auto p = project_to_origin(l) + direction;
-            return join(l, p);
         }
     }
 }

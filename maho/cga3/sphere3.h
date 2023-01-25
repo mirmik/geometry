@@ -69,10 +69,8 @@ namespace maho
             }
 
             // Returns the radius of the sphere if unitized.
-            // Equation: _w = - (p^2 - r^2) / 2
-            //         : -2*_w = p^2 - r^2
-            //         : r^2 = p^2 + 2*_w
-            //         : r = sqrt(p^2 + 2*_w)
+            // From equation: _w = - (p^2 - r^2) / 2
+            //              : r = sqrt(p^2 + 2*_w)
             constexpr T radius() const
             {
                 auto p2 = _xyz.norm2();

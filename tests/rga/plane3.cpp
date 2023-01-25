@@ -9,7 +9,7 @@ TEST_CASE("plane3")
     CHECK_EQ(p1.normal(), maho::vec3<float>(1, 1, 1));
 }
 
-TEST_CASE("Construct by line and direction")
+/*TEST_CASE("Construct by line and direction")
 {
     constexpr auto a = maho::rga::point3<float>(0, 1, 1);
     constexpr auto b = maho::rga::point3<float>(10, 1, 1);
@@ -20,4 +20,4 @@ TEST_CASE("Construct by line and direction")
     constexpr auto p = maho::rga::plane3<float>::construct(l, d).unitized();
     CHECK_EQ(p.normal(), maho::vec3<float>(0, -1, 0));
     CHECK_EQ(p.weight(), 1);
-}
+}*/

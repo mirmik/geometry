@@ -7,7 +7,12 @@ namespace maho
 {
     namespace rga
     {
-        // Line is bivector in CL(3,1) and trivector in CL(4,1).
+        template <class T> class point3;
+
+        // RGA (bivector):  l = vx*e41 + vy*e42 + vz*e43 + mx*e23 + my*e31 +
+        // mz*e12.
+        //
+        // CGA (trivector):
         template <class T> class line3
         {
             vec3<T> _direction = {};
@@ -48,6 +53,16 @@ namespace maho
                 return _momentum;
             }
 
+            constexpr vec3<T> weight() const
+            {
+                return _direction;
+            }
+
+            constexpr vec3<T> bulk() const
+            {
+                return _momentum;
+            }
+
             constexpr vec3<T> v() const
             {
                 return _direction;
@@ -78,6 +93,21 @@ namespace maho
             {
                 return line3(0, 0, 1, 0, 0, 0);
             }
+
+            constexpr line3 operator-() const
+            {
+                return line3(-_direction, -_momentum);
+            }
+
+            bool is_infinite()
+            {
+                return _direction == vec3<T>{0, 0, 0};
+            }
+
+            /*bool is_unitized(T eps = 1e-5) const
+            {
+                return _direction.norm2() < eps;
+            }*/
         };
 
         template <class T> constexpr line3<T> OX()

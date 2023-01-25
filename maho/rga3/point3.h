@@ -2,11 +2,13 @@
 #define MAHO_RGA_POINT3_H
 
 #include <maho/base.h>
+#include <maho/ga0/magnitude.h>
 
 namespace maho
 {
     namespace rga
     {
+        // RGA: p = x*e1 + y*e2 + z*e3 + w*e4
         template <class T> class point3
         {
             vec3<T> _xyz;
@@ -41,19 +43,9 @@ namespace maho
                 return *this;
             }
 
-            constexpr T x() const
+            constexpr vec3<T> xyz() const
             {
-                return _xyz.x();
-            }
-
-            constexpr T y() const
-            {
-                return _xyz.y();
-            }
-
-            constexpr T z() const
-            {
-                return _xyz.z();
+                return _xyz;
             }
 
             constexpr T w() const
@@ -61,52 +53,12 @@ namespace maho
                 return _w;
             }
 
-            constexpr T &x()
-            {
-                return _xyz.x();
-            }
-
-            constexpr T &y()
-            {
-                return _xyz.y();
-            }
-
-            constexpr T &z()
-            {
-                return _xyz.z();
-            }
-
-            constexpr T &w()
-            {
-                return _w;
-            }
-
-            constexpr vec3<T> xyz() const
-            {
-                return _xyz;
-            }
-
-            constexpr vec3<T> &xyz()
-            {
-                return _xyz;
-            }
-
             constexpr vec3<T> bulk() const
             {
                 return _xyz;
             }
 
-            constexpr vec3<T> &bulk()
-            {
-                return _xyz;
-            }
-
             constexpr T weight() const
-            {
-                return _w;
-            }
-
-            constexpr T &weight()
             {
                 return _w;
             }
@@ -125,6 +77,16 @@ namespace maho
             {
                 return point3(_xyz / _w, 1);
             }
+
+            bool is_infinite()
+            {
+                return _w == 0;
+            }
+
+            bool is_unitized()
+            {
+                return _w == 1;
+            }
         };
 
         template <class T>
@@ -141,8 +103,8 @@ namespace std
     template <class T>
     std::ostream &operator<<(std::ostream &os, const maho::rga::point3<T> &p)
     {
-        os << "(" << p.x() << "," << p.y() << "," << p.z() << "," << p.w()
-           << ")";
+        os << "(" << p.xyz().x() << "," << p.xyz().y() << "," << p.xyz().z()
+           << "," << p.w() << ")";
         return os;
     }
 }

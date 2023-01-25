@@ -55,6 +55,16 @@ namespace maho
             {
                 return magnitude(_s / _w, 1);
             }
+
+            bool is_infinite() const
+            {
+                return _w == 0;
+            }
+
+            bool is_unitized() const
+            {
+                return _w == 1;
+            }
         };
     }
 }
