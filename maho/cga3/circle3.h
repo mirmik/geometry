@@ -81,8 +81,8 @@ namespace maho
 
             constexpr T radius() const
             {
-                auto num = _v.norm2() - _w * _w + 2 * (dot(_g, _m));
-                auto den = _g.norm2();
+                auto num = length2(_v) - _w * _w + 2 * (dot(_g, _m));
+                auto den = length2(_g);
                 return sqrt(num / den);
             }
         };

@@ -48,7 +48,7 @@ namespace maho
 
             constexpr plane3 unitized() const
             {
-                auto n = _normal.norm();
+                auto n = length(_normal);
                 return plane3(_normal / n, _negdist / n);
             }
 

@@ -56,7 +56,7 @@ namespace maho
 
             constexpr line3 unitized() const
             {
-                auto n = _direction.norm();
+                auto n = length(_direction);
                 return line3(_direction / n, _momentum / n);
             }
 

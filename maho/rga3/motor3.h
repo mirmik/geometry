@@ -1,7 +1,11 @@
 #ifndef MAHO_RGA3_MOTOR3_H
 #define MAHO_RGA3_MOTOR3_H
 
+// General motor form.
+
 #include <maho/base.h>
+//#include <maho/base/pose3.h>
+#include <maho/rga3/point3.h>
 
 namespace maho
 {
@@ -23,7 +27,10 @@ namespace maho
                 return *this;
             }
 
+            // Factorization. Get rotation part. Must be unitized.
             constexpr vec4<T> rotation() const { return _v; }
+
+            // Factorization. Get translation part. Must be unitized.
             constexpr vec3<T> translation() const
             {
                 auto xyz = cross(_v.xyz(), _m.xyz()) + _m.xyz() * _v.w() -
@@ -35,7 +42,28 @@ namespace maho
             constexpr vec4<T> &m() const { return _m; }
             constexpr vec4<T> &weight() const { return _v; }
             constexpr vec4<T> &bulk() const { return _m; }
+
+            /*constexpr pose3<T> pose() const
+            {
+                return pose3<T>{rotation(), translation()};
+            }*/
+
+            // constexpr mat33<T> rotqmat() { return cosqmat(_v) + sinqmat(_v);
+            // }
         };
+
+        template <typename T>
+        motor3<T> operator*(const motor3<T> &a, const motor3<T> &b)
+        {
+            // auto v = a.v() * b.v();
+            // auto m = a.v() * b.m() + a.m() * b.v();
+            // return motor3<T>{v, m};
+        }
+
+        template <typename T>
+        point3<T> transform(const motor3<T> &m, const point3<T> &p)
+        {
+        }
     }
 }
 

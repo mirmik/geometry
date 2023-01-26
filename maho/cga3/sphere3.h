@@ -37,7 +37,7 @@ namespace maho
             // Constructs a sphere from a center and a radius.
             static constexpr sphere3 construct(const vec3<T> &center, T radius)
             {
-                auto c2 = center.norm2();
+                auto c2 = linalg::length2(center);
                 auto r2 = radius * radius;
                 return sphere3(-1, center, -(c2 - r2) / 2);
             }
@@ -69,7 +69,7 @@ namespace maho
             //              : r = sqrt(p^2 + 2*_w)
             constexpr T radius() const
             {
-                auto p2 = _xyz.norm2();
+                auto p2 = length2(_xyz);
                 return std::sqrt(p2 + 2 * _w);
             }
         };

@@ -18,7 +18,7 @@ namespace maho
         {
             auto a = p.w() * q.xyz() - q.w() * p.xyz();
             auto b = p.w() * q.w();
-            return ga0::magnitude<T>(a.norm(), b);
+            return ga0::magnitude<T>(length(a), b);
         }
 
         // Perpendicular distance between point p and line l.
@@ -27,8 +27,8 @@ namespace maho
                                              const line3<T> &l)
         {
             auto a = cross(l.v(), p.xyz()) + l.m() * p.w();
-            auto b = p.w() * l.v().norm();
-            return ga0::magnitude<T>(a.norm(), b);
+            auto b = p.w() * length(l.v());
+            return ga0::magnitude<T>(length(a), b);
         }
 
         // Perpendicular distance between point p and plane g.
@@ -37,7 +37,7 @@ namespace maho
                                              const plane3<T> &g)
         {
             auto a = std::abs(dot(p.xyz(), g.xyz()) + p.w() * g.w());
-            auto b = p.w() * g.xyz().norm();
+            auto b = p.w() * length(g.xyz());
             return ga0::magnitude<T>(a, b);
         }
 
@@ -47,7 +47,7 @@ namespace maho
                                              const line3<T> &l)
         {
             auto a = std::abs(dot(l.v(), k.m()) + dot(l.m(), k.v()));
-            auto b = cross(l.v(), k.v()).norm();
+            auto b = length(cross(l.v(), k.v()));
             return ga0::magnitude<T>(a, b);
         }
     }

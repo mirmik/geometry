@@ -17,7 +17,7 @@ licant.cxx_application("runtests",
                        ],
                        cxxstd="c++20",
                        ccstd="c11",
-                       cxx_flags="-fmax-errors=1 -g -fPIC -Werror=all -Wno-gnu-zero-variadic-macro-arguments -Weffc++",
+                       cxx_flags="-g -fPIC -Werror=all -Wno-gnu-zero-variadic-macro-arguments -Weffc++",
                        include_paths=["./tests", "."],
                        )
 

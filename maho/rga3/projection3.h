@@ -20,7 +20,7 @@ namespace maho
         template <class T>
         constexpr point3<T> project_to_origin(const line3<T> &l)
         {
-            return {cross(l.v(), l.m()), l.v().norm2()};
+            return {cross(l.v(), l.m()), length2(l.v())};
         }
 
     }

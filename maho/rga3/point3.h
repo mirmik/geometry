@@ -24,10 +24,10 @@ namespace maho
         public:
             constexpr point3() : _xyz(), _w(1) {}
             constexpr point3(T x, T y, T z) : _xyz(x, y, z), _w(1) {}
+            constexpr point3(const vec3<T> &v) : _xyz(v), _w(1) {}
+
             constexpr point3(T x, T y, T z, T w) : _xyz(x, y, z), _w(w) {}
             constexpr point3(const point3 &p) : _xyz(p._xyz), _w(p._w) {}
-            constexpr point3(const pnt3<T> &p) : _xyz(p), _w(1) {}
-            constexpr point3(const vec3<T> &v) : _xyz(v), _w(0) {}
             constexpr point3(const vec3<T> &v, T w) : _xyz(v), _w(w) {}
 
             constexpr vec3<T> xyz() const { return _xyz; }
@@ -42,17 +42,10 @@ namespace maho
                 return *this;
             }
 
-            constexpr point3 &operator=(const pnt3<T> &p)
-            {
-                _xyz = p;
-                _w = 1;
-                return *this;
-            }
-
             constexpr point3 &operator=(const vec3<T> &v)
             {
                 _xyz = v;
-                _w = 0;
+                _w = 1;
                 return *this;
             }
 
@@ -68,9 +61,9 @@ namespace maho
 
             constexpr point3 unitized() const { return point3(_xyz / _w, 1); }
 
-            bool is_infinite() { return _w == 0; }
+            bool is_infinite() const { return _w == 0; }
 
-            bool is_unitized() { return _w == 1; }
+            bool is_unitized() const { return _w == 1; }
         };
 
         template <class T>
@@ -79,7 +72,6 @@ namespace maho
             return point3<T>(p.xyz() + v * p.w(), p.w());
         }
     }
-
 }
 
 namespace std
@@ -87,8 +79,8 @@ namespace std
     template <class T>
     std::ostream &operator<<(std::ostream &os, const maho::rga::point3<T> &p)
     {
-        os << "(" << p.xyz().x() << "," << p.xyz().y() << "," << p.xyz().z()
-           << "," << p.w() << ")";
+        os << "(" << p.xyz().x << "," << p.xyz().y << "," << p.xyz().z << ","
+           << p.w() << ")";
         return os;
     }
 }

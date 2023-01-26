@@ -26,10 +26,10 @@ namespace maho
         // Zero if p and q are coincident.
         // p and q are unitized.
         template <class T>
-        constexpr line3<T> join(const pnt3<T> &p, const pnt3<T> &q)
+        constexpr line3<T> join_point_point(const vec3<T> &p, const vec3<T> &q)
         {
-            auto xyz = q.xyz() - p.xyz();
-            auto w = cross(p.xyz(), q.xyz());
+            auto xyz = q.xyz - p.xyz;
+            auto w = cross(p.xyz, q.xyz);
             return {xyz, w};
         }
 

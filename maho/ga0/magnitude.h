@@ -1,6 +1,8 @@
 #ifndef MAHO_GA1_MAGNITUDE_H
 #define MAHO_GA1_MAGNITUDE_H
 
+#include <iostream>
+
 namespace maho
 {
     namespace ga0
@@ -21,25 +23,13 @@ namespace maho
                 return *this;
             }
 
-            constexpr T s() const
-            {
-                return _s;
-            }
+            constexpr T s() const { return _s; }
 
-            constexpr T w() const
-            {
-                return _w;
-            }
+            constexpr T w() const { return _w; }
 
-            constexpr T &s()
-            {
-                return _s;
-            }
+            constexpr T &s() { return _s; }
 
-            constexpr T &w()
-            {
-                return _w;
-            }
+            constexpr T &w() { return _w; }
 
             constexpr bool operator==(const magnitude &m) const
             {
@@ -56,15 +46,9 @@ namespace maho
                 return magnitude(_s / _w, 1);
             }
 
-            bool is_infinite() const
-            {
-                return _w == 0;
-            }
+            bool is_infinite() const { return _w == 0; }
 
-            bool is_unitized() const
-            {
-                return _w == 1;
-            }
+            bool is_unitized() const { return _w == 1; }
         };
     }
 }
