@@ -35,6 +35,10 @@ namespace maho
             constexpr vec3<T> bulk() const { return _xyz; }
             constexpr T weight() const { return _w; }
 
+            auto &x() const { return _xyz.x; }
+            auto &y() const { return _xyz.y; }
+            auto &z() const { return _xyz.z; }
+
             constexpr point3 &operator=(const point3 &p)
             {
                 _xyz = p._xyz;

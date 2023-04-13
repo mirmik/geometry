@@ -21,4 +21,9 @@ namespace maho
     template <class T> using mat44 = linalg::mat<T, 4, 4>;
 }
 
+namespace linalg
+{
+    using linalg::ostream_overloads::operator<<;
+}
+
 #endif

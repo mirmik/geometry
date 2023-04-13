@@ -5,16 +5,33 @@
 
 #include <maho/base.h>
 //#include <maho/base/pose3.h>
+#include <maho/rga3/line3.h>
 #include <maho/rga3/point3.h>
 
 namespace maho
 {
     namespace rga
     {
+        template <class T> class screw_line3
+        {
+            line3<T> _l;
+            T phi, d;
+
+        public:
+            screw_line3() : _l(), phi(0), d(0) {}
+            screw_line3(const line3<T> &l, T phi, T d) : _l(l), phi(phi), d(d)
+            {
+            }
+
+            constexpr const line3<T> &line() const { return _l; }
+            constexpr T angle() const { return phi; }
+            constexpr T distance() const { return d; }
+        };
+
         template <typename T> class motor3
         {
-            vec4<T> _v;
-            vec4<T> _m;
+            vec4<T> _v; // rotation part
+            vec4<T> _m; // translation part
 
         public:
             motor3() : _v(0, 0, 0, 1), _m(0, 0, 0, 0) {}
@@ -38,32 +55,155 @@ namespace maho
                 return xyz;
             }
 
-            constexpr vec4<T> &v() const { return _v; }
-            constexpr vec4<T> &m() const { return _m; }
-            constexpr vec4<T> &weight() const { return _v; }
-            constexpr vec4<T> &bulk() const { return _m; }
+            constexpr const vec4<T> &v() const { return _v; }
+            constexpr const vec4<T> &m() const { return _m; }
+            constexpr const vec4<T> &weight() const { return _v; }
+            constexpr const vec4<T> &bulk() const { return _m; }
 
-            /*constexpr pose3<T> pose() const
+            constexpr screw_line3<T> screw_line() const
             {
-                return pose3<T>{rotation(), translation()};
-            }*/
-
-            // constexpr mat33<T> rotqmat() { return cosqmat(_v) + sinqmat(_v);
-            // }
+                auto phi = acos(_v.w);
+                auto d = -(_m.w / sin(phi));
+                auto lv = _v.xyz() / sin(phi);
+                auto lm = (_m.xyz() - lv * d * cos(phi)) / sin(phi);
+                return {line3<T>(lv, lm), phi * 2, d * 2};
+            }
         };
+
+        template <typename T>
+        motor3<T> motor3_from_rotation_quat(const vec4<T> &v)
+        {
+            return motor3<T>{v, vec4<T>(0, 0, 0, 0)};
+        }
+
+        template <typename T>
+        motor3<T> motor3_from_rotation_vector(const vec3<T> &e)
+        {
+            auto u = normalize(e);
+            auto a = length(e);
+            auto v = linalg::rotation_quat(u, a);
+            auto m = vec4(0, 0, 0, 0);
+            return motor3<T>{v, m};
+        }
+
+        template <typename T>
+        motor3<T> motor3_from_rotation_dirang(const vec3<T> &d, T a)
+        {
+            auto u = normalize(d);
+            auto v = linalg::rotation_quat(u, a);
+            auto m = vec4<T>(0, 0, 0, 0);
+            return motor3<T>{v, m};
+        }
+
+        template <typename T>
+        motor3<T> motor3_from_translation_vector(const vec3<T> &t)
+        {
+            auto v = vec4<T>(0, 0, 0, 1);
+            auto m = vec4<T>(t / 2, 0);
+            return motor3<T>{v, m};
+        }
+
+        template <typename T>
+        vec4<T> realbivec3_prod_dualbivec3(const vec4<T> &a, const vec4<T> &b)
+        {
+            auto xyz = -linalg::cross(a.xyz(), b.xyz()) + a.xyz() * b.w +
+                       b.xyz() * a.w;
+            auto w = 0 - a.x * b.x - a.y * b.y - a.z * b.z + a.w * b.w;
+            return vec4<T>(xyz.x, xyz.y, xyz.z, w);
+        }
+
+        template <typename T>
+        vec4<T> dualbivec3_prod_realbivec3(const vec4<T> &a, const vec4<T> &b)
+        {
+            auto xyz = +linalg::cross(a.xyz(), b.xyz()) + a.xyz() * b.w +
+                       b.xyz() * a.w;
+            auto w = 0 - a.x * b.x - a.y * b.y - a.z * b.z + a.w * b.w;
+            return vec4<T>(xyz.x, xyz.y, xyz.z, w);
+        }
+
+        template <typename T>
+        vec4<T> dualbivec3_antiprod_realbivec3(const vec4<T> &a,
+                                               const vec4<T> &b)
+        {
+            auto xyz = -linalg::cross(a.xyz(), b.xyz()) + a.xyz() * b.w +
+                       b.xyz() * a.w;
+            auto w = 0 - linalg::dot(a.xyz(), b.xyz()) + a.w * b.w;
+            return vec4<T>(xyz, w);
+        }
+
+        template <typename T>
+        vec4<T> realbivec3_antiprod_dualbivec3(const vec4<T> &a,
+                                               const vec4<T> &b)
+        {
+            auto xyz = +linalg::cross(a.xyz(), b.xyz()) + a.xyz() * b.w +
+                       b.xyz() * a.w;
+            auto w = 0 - linalg::dot(a.xyz(), b.xyz()) + a.w * b.w;
+            return vec4<T>(xyz, w);
+        }
+
+        template <typename T>
+        vec4<T> realbivec3_prod_realbivec3(const vec4<T> &a, const vec4<T> &b)
+        {
+            return linalg::qmul(a, b);
+        }
+
+        template <typename T>
+        vec4<T> dualbivec3_antiprod_dualbivec3(const vec4<T> &a,
+                                               const vec4<T> &b)
+        {
+            return linalg::qmul(a, b);
+        }
 
         template <typename T>
         motor3<T> operator*(const motor3<T> &a, const motor3<T> &b)
         {
-            // auto v = a.v() * b.v();
-            // auto m = a.v() * b.m() + a.m() * b.v();
-            // return motor3<T>{v, m};
+            auto vv = dualbivec3_antiprod_dualbivec3(a.v(), b.v());
+            auto vm = dualbivec3_antiprod_realbivec3(a.v(), b.m());
+            auto mv = realbivec3_antiprod_dualbivec3(a.m(), b.v());
+            return motor3<T>{vv, vm + mv};
         }
 
         template <typename T>
-        point3<T> transform(const motor3<T> &m, const point3<T> &p)
+        point3<T> transform(const motor3<T> &Q, const point3<T> &p)
         {
+            auto &v = Q.v();
+            auto &m = Q.m();
+            auto x =
+                (1 - 2 * v.y * v.y - 2 * v.z * v.z) * p.x() +
+                2 * (v.x * v.y - v.w * v.z) * p.y() +
+                2 * (v.x * v.z + v.w * v.y) * p.z() +
+                2 * (v.y * m.z - v.z * m.y + v.w * m.x - v.x * m.w) * p.w();
+            auto y =
+                (1 - 2 * v.x * v.x - 2 * v.z * v.z) * p.y() +
+                2 * (v.y * v.z - v.w * v.x) * p.z() +
+                2 * (v.y * v.x + v.w * v.z) * p.x() +
+                2 * (v.z * m.x - v.x * m.z + v.w * m.y - v.y * m.w) * p.w();
+            auto z =
+                (1 - 2 * v.x * v.x - 2 * v.y * v.y) * p.z() +
+                2 * (v.x * v.z - v.w * v.y) * p.x() +
+                2 * (v.y * v.z + v.w * v.x) * p.y() +
+                2 * (v.x * m.y - v.y * m.x + v.w * m.z - v.z * m.w) * p.w();
+            auto w = p.w();
+            return point3<T>(x, y, z, w);
         }
+    }
+}
+
+namespace std
+{
+    template <class T>
+    std::ostream &operator<<(std::ostream &os, const maho::rga::motor3<T> &p)
+    {
+        os << "motor3(v:" << p.v() << ",m:" << p.m() << ")";
+        return os;
+    }
+    template <class T>
+    std::ostream &operator<<(std::ostream &os,
+                             const maho::rga::screw_line3<T> &sl)
+    {
+        os << "screw_line3(" << sl.line() << ",phi:" << sl.angle()
+           << ",d:" << sl.distance() << ")";
+        return os;
     }
 }
 

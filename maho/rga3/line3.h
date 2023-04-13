@@ -10,6 +10,7 @@
 /// CGA (trivector): l = vx*e415 + vy*e425 + vz*e435 + mx*e235 + my*e315 +
 /// mz*e125.
 
+#include <iostream>
 #include <maho/base.h>
 
 namespace maho
@@ -85,4 +86,13 @@ namespace maho
     }
 }
 
+namespace std
+{
+    template <class T>
+    std::ostream &operator<<(std::ostream &os, const maho::rga::line3<T> &p)
+    {
+        os << "line3(v:" << p.direction() << ",m:" << p.momentum() << ")";
+        return os;
+    }
+}
 #endif
