@@ -46,6 +46,8 @@ namespace maho
                 return magnitude(_s / _w, 1);
             }
 
+            constexpr T value() const { return _s / _w; }
+
             bool is_infinite() const { return _w == 0; }
 
             bool is_unitized() const { return _w == 1; }

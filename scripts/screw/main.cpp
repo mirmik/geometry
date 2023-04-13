@@ -34,7 +34,17 @@ int main()
     nos::fprintln("screwline(Tx*R) = {}", (Tx * R).screw_line());
     nos::fprintln("screwline(Tx*Tz*R) = {}", (Tx * Tz * R).screw_line());
 
-    auto s = (Tx * Tz * R).screw_line();
-    nos::fprintln("project(Tx*Tz*R) = {}",
-                  maho::rga::project_to_origin(s.line()));
+    nos::fprintln("screwline().length_for_point(pnt) = {}",
+                  (Tx * R).screw_line());
+    nos::fprintln("screwline().length_for_point(pnt) = {}",
+                  (Ty * R).screw_line());
+    nos::fprintln("screwline().length_for_point(pnt) = {}",
+                  (Tz * R).screw_line());
+
+    nos::fprintln("screwline().length_for_point(pnt) = {}",
+                  (Tx * R).screw_line().length_for_point({0, 0, 0}));
+    nos::fprintln("screwline().length_for_point(pnt) = {}",
+                  (Ty * R).screw_line().length_for_point({0, 0, 0}));
+    nos::fprintln("screwline().length_for_point(pnt) = {}",
+                  (Tz * R).screw_line().length_for_point({0, 0, 0}));
 }

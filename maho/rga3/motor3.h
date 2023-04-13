@@ -15,17 +15,35 @@ namespace maho
         template <class T> class screw_line3
         {
             line3<T> _l;
-            T phi, d;
+            T _phi, _d;
 
         public:
-            screw_line3() : _l(), phi(0), d(0) {}
-            screw_line3(const line3<T> &l, T phi, T d) : _l(l), phi(phi), d(d)
+            constexpr screw_line3() : _l(), _phi(0), _d(0) {}
+            screw_line3(const line3<T> &l, T phi, T d) : _l(l), _phi(phi), _d(d)
             {
             }
 
             constexpr const line3<T> &line() const { return _l; }
-            constexpr T angle() const { return phi; }
-            constexpr T distance() const { return d; }
+            constexpr T angle() const { return _phi; }
+            constexpr T distance() const { return _d; }
+
+            constexpr T steps() const { return _phi / 2 / M_PI; }
+            constexpr T step_distance() const { return _d / steps(); }
+
+            constexpr T length_of_screw_step_with_radius(T r) const
+            {
+                T circlen = 2 * M_PI * r;
+                T stepheight = step_distance();
+                T stepwidth = sqrt(circlen * circlen + stepheight * stepheight);
+                return stepwidth;
+            }
+
+            constexpr T length_with_radius(T r) const
+            {
+                return length_of_screw_step_with_radius(r) * steps();
+            }
+
+            constexpr T length_for_point(const point3<T> &r) const;
         };
 
         template <typename T> class motor3
@@ -204,6 +222,23 @@ namespace std
         os << "screw_line3(" << sl.line() << ",phi:" << sl.angle()
            << ",d:" << sl.distance() << ")";
         return os;
+    }
+}
+
+#include <maho/rga3/distance3.h>
+
+namespace maho
+{
+    namespace rga
+    {
+        template <class T>
+        constexpr T screw_line3<T>::length_for_point(const point3<T> &p) const
+        {
+
+            auto dist_to_point = maho::rga::distance<T>(p, line());
+            return length_with_radius(dist_to_point.value());
+        }
+
     }
 }
 
