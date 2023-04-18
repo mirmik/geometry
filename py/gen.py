@@ -184,11 +184,4 @@ e_23 = CliffordAlgebra.e_23
 e_31 = CliffordAlgebra.e_31
 e_321 = CliffordAlgebra.e_321
 
-
-A = a_23 * e_23 + a_31 * e_31 + a_12 * e_12
-B = b_23 * e_23 + b_31 * e_31 + b_12 * e_12
-
-
-C = ((A * B) / (B * A))
-
-pprint(expand(C))
+pprint(e_1 * e_2)
