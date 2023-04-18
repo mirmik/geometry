@@ -2,16 +2,38 @@
 
 from sympy import *
 
-canonical_formes = {
-    (1, 2, 3): (3, 2, 1),
-    (1, 2): (1, 2),
-    (1, 3): (3, 1),
-    (2, 3): (2, 3),
-    (1,): (1,),
-    (2,): (2,),
-    (3,): (3,),
-    (): ()
-}
+
+class CliffordAlgebra:
+    e = Symbol("e")
+    e_1 = Symbol("e_1")
+    e_2 = Symbol("e_2")
+    e_3 = Symbol("e_3")
+    e_12 = Symbol("e_12")
+    e_23 = Symbol("e_23")
+    e_31 = Symbol("e_31")
+    e_321 = Symbol("e_321")
+
+    canonical_formes = {
+        (1, 2, 3): (3, 2, 1),
+        (1, 2): (1, 2),
+        (1, 3): (3, 1),
+        (2, 3): (2, 3),
+        (1,): (1,),
+        (2,): (2,),
+        (3,): (3,),
+        (): ()
+    }
+
+    canonical_symbols = {
+        "e_321": e_321,
+        "e_12": e_12,
+        "e_31": e_31,
+        "e_23": e_23,
+        "e_1": e_1,
+        "e_2": e_2,
+        "e_3": e_3,
+        "e": e
+    }
 
 
 class ElepticalArray:
@@ -88,7 +110,7 @@ class CliffordMulter:
         eleptical_array = ElepticalArray(eleptical_ones, negative)
         eleptical_array = eleptical_array.sorted()
         eleptical_array_as_tuple = tuple(eleptical_array.indexes)
-        canonical_form = canonical_formes[eleptical_array_as_tuple]
+        canonical_form = CliffordAlgebra.canonical_formes[eleptical_array_as_tuple]
         eleptical_array = eleptical_array.sorted_as_template(canonical_form)
 
         return CliffordMulter(eleptical_array.indexes, dual_ones, eleptical_array.negative)
@@ -96,8 +118,62 @@ class CliffordMulter:
     def __str__(self):
         return "CliffordMulter(elep:{}, dual:{})".format(self.eleptical_ones, self.dual_ones)
 
+    def symbol_name(self):
+        if len(self.dual_ones) == 0 and len(self.eleptical_ones.indexes) == 0:
+            return "e"
 
-a = CliffordMulter([1, 2])
-b = CliffordMulter([2, 3])
+        es = "".join(f"{i}" for i in self.eleptical_ones.indexes)
+        base = "e_"
+        ds = "".join(f"{i}" for i in self.dual_ones)
 
-print(a.commutate(b))
+        return base + ds + es
+
+    def symbol(self):
+        a = self.symbol_name()
+        sign = -1 if self.eleptical_ones.negative else +1
+        return CliffordAlgebra.canonical_symbols[f"{a}"] * sign
+
+
+class CliffordGeometrySymbol(Symbol):
+    def __new__(cls, name, *args, **kwargs):
+        return super().__new__(cls, name, commutative=False)
+
+    def __init__(self, name, ellipse, dual, negative=False):
+        super().__init__()
+        self.multer = CliffordMulter(ellipse, dual, negative)
+
+    @staticmethod
+    def from_multer(multer):
+        name = multer.symbol_name()
+        return CliffordGeometrySymbol(name, multer.eleptical_ones.indexes, multer.dual_ones, multer.eleptical_ones.negative)
+
+    def __mul__(self, other):
+        if isinstance(other, CliffordGeometrySymbol):
+            multer = self.multer.commutate(other.multer)
+            return CliffordGeometrySymbol.from_multer(multer)
+        else:
+            return super().__mul__(other)
+
+    def __pow__(self, power, modulo=None):
+        if power == 2:
+            return self * self
+        else:
+            raise Exception("Not implemented")
+
+
+var("a_1 a_2 a_3 b_1 b_2 b_3")
+
+e_321 = CliffordGeometrySymbol("e_321", [3, 2, 1], [])
+e_12 = CliffordGeometrySymbol("e_12", [1, 2], [])
+e_31 = CliffordGeometrySymbol("e_31", [3, 1], [])
+e_23 = CliffordGeometrySymbol("e_23", [2, 3], [])
+e_1 = CliffordGeometrySymbol("e_1", [1], [])
+e_2 = CliffordGeometrySymbol("e_2", [2], [])
+e_3 = CliffordGeometrySymbol("e_3", [3], [])
+e = CliffordGeometrySymbol("e", [], [])
+
+A = a_1*e_23 + a_2*e_31 + a_3*e_12
+B = b_1*e_23 + b_2*e_31 + b_3*e_12
+
+C = simplify(expand(A * B))
+pprint(C)
