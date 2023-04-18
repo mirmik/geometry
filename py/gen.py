@@ -3,39 +3,6 @@
 from sympy import *
 
 
-class CliffordAlgebra:
-    e = Symbol("e")
-    e_1 = Symbol("e_1")
-    e_2 = Symbol("e_2")
-    e_3 = Symbol("e_3")
-    e_12 = Symbol("e_12")
-    e_23 = Symbol("e_23")
-    e_31 = Symbol("e_31")
-    e_321 = Symbol("e_321")
-
-    canonical_formes = {
-        (1, 2, 3): (3, 2, 1),
-        (1, 2): (1, 2),
-        (1, 3): (3, 1),
-        (2, 3): (2, 3),
-        (1,): (1,),
-        (2,): (2,),
-        (3,): (3,),
-        (): ()
-    }
-
-    canonical_symbols = {
-        "e_321": e_321,
-        "e_12": e_12,
-        "e_31": e_31,
-        "e_23": e_23,
-        "e_1": e_1,
-        "e_2": e_2,
-        "e_3": e_3,
-        "e": e
-    }
-
-
 class ElepticalArray:
     def __init__(self, indexes, negative=False):
         self.indexes = indexes
@@ -145,7 +112,8 @@ class CliffordGeometrySymbol(Symbol):
     @staticmethod
     def from_multer(multer):
         name = multer.symbol_name()
-        return CliffordGeometrySymbol(name, multer.eleptical_ones.indexes, multer.dual_ones, multer.eleptical_ones.negative)
+        sign = -1 if multer.eleptical_ones.negative else +1
+        return sign * CliffordGeometrySymbol(name, multer.eleptical_ones.indexes, multer.dual_ones)
 
     def __mul__(self, other):
         if isinstance(other, CliffordGeometrySymbol):
@@ -161,6 +129,39 @@ class CliffordGeometrySymbol(Symbol):
             raise Exception("Not implemented")
 
 
+class CliffordAlgebra:
+    e = CliffordGeometrySymbol("e", [], [])
+    e_1 = CliffordGeometrySymbol("e_1", [1], [])
+    e_2 = CliffordGeometrySymbol("e_2", [2], [])
+    e_3 = CliffordGeometrySymbol("e_3", [3], [])
+    e_12 = CliffordGeometrySymbol("e_12", [1, 2], [])
+    e_23 = CliffordGeometrySymbol("e_23", [2, 3], [])
+    e_31 = CliffordGeometrySymbol("e_31", [3, 1], [])
+    e_321 = CliffordGeometrySymbol("e_321", [3, 2, 1], [])
+
+    canonical_formes = {
+        (1, 2, 3): (3, 2, 1),
+        (1, 2): (1, 2),
+        (1, 3): (3, 1),
+        (2, 3): (2, 3),
+        (1,): (1,),
+        (2,): (2,),
+        (3,): (3,),
+        (): ()
+    }
+
+    canonical_symbols = {
+        "e_321": e_321,
+        "e_12": e_12,
+        "e_31": e_31,
+        "e_23": e_23,
+        "e_1": e_1,
+        "e_2": e_2,
+        "e_3": e_3,
+        "e": e
+    }
+
+
 alphabet = [
     CliffordMulter([]),
     CliffordMulter([1]),
@@ -172,5 +173,22 @@ alphabet = [
     CliffordMulter([3, 2, 1])
 ]
 
-for a in alphabet:
-    print(a.symbol_name())
+var("a_23, a_31, a_12, b_23, b_31, b_12")
+
+e = CliffordAlgebra.e
+e_1 = CliffordAlgebra.e_1
+e_2 = CliffordAlgebra.e_2
+e_3 = CliffordAlgebra.e_3
+e_12 = CliffordAlgebra.e_12
+e_23 = CliffordAlgebra.e_23
+e_31 = CliffordAlgebra.e_31
+e_321 = CliffordAlgebra.e_321
+
+
+A = a_23 * e_23 + a_31 * e_31 + a_12 * e_12
+B = b_23 * e_23 + b_31 * e_31 + b_12 * e_12
+
+
+C = ((A * B) / (B * A))
+
+pprint(expand(C))
