@@ -46,12 +46,13 @@
 #ifndef LINALG_H
 #define LINALG_H
 
-#include <array>       // For std::array
-#include <cmath>       // For various unary math functions, such as std::sqrt
-#include <cstdint>     // For implementing namespace linalg::aliases
-#include <cstdlib>     // To resolve std::abs ambiguity on clang
-#include <functional>  // For std::hash declaration
-#include <iosfwd>      // For forward definitions of std::ostream
+#include <array>      // For std::array
+#include <cmath>      // For various unary math functions, such as std::sqrt
+#include <cstdint>    // For implementing namespace linalg::aliases
+#include <cstdlib>    // To resolve std::abs ambiguity on clang
+#include <functional> // For std::hash declaration
+#include <iosfwd>     // For forward definitions of std::ostream
+#include <iostream>
 #include <type_traits> // For std::enable_if, std::is_same, std::declval
 
 // In Visual Studio 2015, `constexpr` applied to a member function implies

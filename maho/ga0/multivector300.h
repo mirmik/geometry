@@ -46,44 +46,6 @@ namespace maho
         double _s;
     };
 
-    template <class... Args> class EUnion;
-
-    template <class T, class... Args> class EUnion
-    {
-        T _t;
-        EUnion<Args...> _u;
-
-    public:
-        operator T() const { return _t; }
-    };
-
-    template <> class EUnion
-    {
-    };
-
-    template <class... Args, class EX>
-    auto operator+(const EUnion<Args...> &a, const EX &b)
-    {
-        if constexpr (std::is_convertable_v<EU, EX>)
-        {
-            return EU(b) + a;
-        }
-        else
-        {
-            return EUnion<Args..., EX>(a, b);
-        }
-    }
-
-    template <class EUA, class EX, class R, int N, int... I>
-    auto prod_element_accum(const R r, const Tuple<> &a, const EX &b)
-    {
-        return r + std::get<N>(a) * b;
-    }
-
-    template <class EUA, class EX> auto prod_element(const EUA &a, const EX &b)
-    {
-    }
-
     static inline E prod(E a, E b) { return E(a.s() * b.s()); }
     static inline E prod(E1 a, E1 b) { return E(a.s() * b.s()); }
     static inline E prod(E2 a, E2 b) { return E(a.s() * b.s()); }
@@ -127,6 +89,55 @@ namespace maho
     static inline E321 prod(E31 e31, E2 e2) { return E321(-e31.s() * e2.s()); }
     static inline E321 prod(E1 e1, E23 e23) { return E321(-e23.s() * e1.s()); }
     static inline E321 prod(E23 e23, E1 e1) { return E321(-e23.s() * e1.s()); }
+
+    class scalar300
+    {
+        E _e;
+    };
+
+    class vector300
+    {
+        E1 _e1;
+        E2 _e2;
+        E3 _e3;
+    };
+
+    class bivector300
+    {
+        E12 _e12;
+        E31 _e31;
+        E23 _e23;
+    };
+
+    class trivector300
+    {
+        E321 _e321;
+    };
+
+    class scalar300_bivector300
+    {
+        scalar300 _s;
+        bivector300 _b;
+    };
+
+    class scalar300_vector300
+    {
+        scalar300 _s;
+        vector300 _v;
+    };
+
+    static inline scalar300 prod(const scalar300 &a, const scalar300 &b)
+    {
+        return {a.e() * b.e()};
+    }
+
+    template <typename A, typename B>
+    static inline auto prod(const A &a, const B &b)
+    {
+        auto i = inner_prod(a, b);
+        auto o = outer_prod(a, b);
+        return i + o;
+    }
 
     class multivector300
     {
