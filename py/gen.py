@@ -161,19 +161,16 @@ class CliffordGeometrySymbol(Symbol):
             raise Exception("Not implemented")
 
 
-var("a_1 a_2 a_3 b_1 b_2 b_3")
+alphabet = [
+    CliffordMulter([]),
+    CliffordMulter([1]),
+    CliffordMulter([2]),
+    CliffordMulter([3]),
+    CliffordMulter([2, 3]),
+    CliffordMulter([3, 1]),
+    CliffordMulter([1, 2]),
+    CliffordMulter([3, 2, 1])
+]
 
-e_321 = CliffordGeometrySymbol("e_321", [3, 2, 1], [])
-e_12 = CliffordGeometrySymbol("e_12", [1, 2], [])
-e_31 = CliffordGeometrySymbol("e_31", [3, 1], [])
-e_23 = CliffordGeometrySymbol("e_23", [2, 3], [])
-e_1 = CliffordGeometrySymbol("e_1", [1], [])
-e_2 = CliffordGeometrySymbol("e_2", [2], [])
-e_3 = CliffordGeometrySymbol("e_3", [3], [])
-e = CliffordGeometrySymbol("e", [], [])
-
-A = a_1*e_23 + a_2*e_31 + a_3*e_12
-B = b_1*e_23 + b_2*e_31 + b_3*e_12
-
-C = simplify(expand(A * B))
-pprint(C)
+for a in alphabet:
+    print(a.symbol_name())
