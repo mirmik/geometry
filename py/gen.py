@@ -138,7 +138,7 @@ class CliffordGeometrySymbol(Symbol):
 
     def __mul__(self, other):
         if isinstance(other, CliffordGeometrySymbol):
-            multer = self.multer.commutate(other.multer)
+            multer = self.multer.prod(other.multer)
             return multer.symbol()
         else:
             return super().__mul__(other)
