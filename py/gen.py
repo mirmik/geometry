@@ -57,6 +57,9 @@ class CliffordMulter:
         self.total_elipse = total_elipse
         self.total_dual = total_dual
 
+    def sign(self):
+        return -1 if self.eleptical_ones.negative else 1
+
     def grade(self):
         return len(self.dual_ones) + len(self.eleptical_ones.indexes)
 
@@ -105,7 +108,18 @@ class CliffordMulter:
         return self.prod(other).reverse()
 
     def __str__(self):
-        return "CliffordMulter(elep:{}, dual:{})".format(self.eleptical_ones, self.dual_ones)
+        if len(self.dual_ones) == 0 and len(self.eleptical_ones.indexes) == 0:
+            return "e"
+
+        es = "".join(f"{i}" for i in self.eleptical_ones.indexes)
+        base = "e_"
+        ds = "".join(f"{i}" for i in self.dual_ones)
+
+        sign = "-" if self.eleptical_ones.negative else ""
+        return sign+base + ds + es
+
+    def __repr__(self):
+        return self.__str__()
 
     def symbol_name(self):
         if len(self.dual_ones) == 0 and len(self.eleptical_ones.indexes) == 0:
@@ -157,20 +171,20 @@ class CliffordAlgebra:
     e_1 = CliffordGeometrySymbol("e_1", [1], [], eleptical_ones, dual_ones)
     e_2 = CliffordGeometrySymbol("e_2", [2], [], eleptical_ones, dual_ones)
     e_3 = CliffordGeometrySymbol("e_3", [3], [], eleptical_ones, dual_ones)
-    e_12 = CliffordGeometrySymbol(
-        "e_12", [1, 2], [], eleptical_ones, dual_ones)
     e_23 = CliffordGeometrySymbol(
         "e_23", [2, 3], [], eleptical_ones, dual_ones)
     e_31 = CliffordGeometrySymbol(
         "e_31", [3, 1], [], eleptical_ones, dual_ones)
+    e_12 = CliffordGeometrySymbol(
+        "e_12", [1, 2], [], eleptical_ones, dual_ones)
     e_321 = CliffordGeometrySymbol(
         "e_321", [3, 2, 1], [], eleptical_ones, dual_ones)
 
     canonical_formes = {
         (1, 2, 3): (3, 2, 1),
-        (1, 2): (1, 2),
-        (1, 3): (3, 1),
         (2, 3): (2, 3),
+        (1, 3): (3, 1),
+        (1, 2): (1, 2),
         (1,): (1,),
         (2,): (2,),
         (3,): (3,),
@@ -179,14 +193,69 @@ class CliffordAlgebra:
 
     canonical_symbols = {
         "e_321": e_321,
+        "e_23": e_23,
         "e_12": e_12,
         "e_31": e_31,
-        "e_23": e_23,
         "e_1": e_1,
         "e_2": e_2,
         "e_3": e_3,
         "e": e
     }
+
+
+class CliffordAlgebra301:
+    eleptical_ones = [1, 2, 3]
+    dual_ones = [4]
+    e = CliffordGeometrySymbol("e", [], [], eleptical_ones, dual_ones)
+    e_1 = CliffordGeometrySymbol("e_1", [1], [], eleptical_ones, dual_ones)
+    e_2 = CliffordGeometrySymbol("e_2", [2], [], eleptical_ones, dual_ones)
+    e_3 = CliffordGeometrySymbol("e_3", [3], [], eleptical_ones, dual_ones)
+    e_4 = CliffordGeometrySymbol("e_4", [], [4], eleptical_ones, dual_ones)
+    e_23 = CliffordGeometrySymbol(
+        "e_23", [2, 3], [], eleptical_ones, dual_ones)
+    e_31 = CliffordGeometrySymbol(
+        "e_31", [3, 1], [], eleptical_ones, dual_ones)
+    e_12 = CliffordGeometrySymbol(
+        "e_12", [1, 2], [], eleptical_ones, dual_ones)
+
+    e_41 = CliffordGeometrySymbol("e_41", [1], [4], eleptical_ones, dual_ones)
+    e_42 = CliffordGeometrySymbol("e_42", [2], [4], eleptical_ones, dual_ones)
+    e_43 = CliffordGeometrySymbol("e_43", [3], [4], eleptical_ones, dual_ones)
+
+    e_321 = CliffordGeometrySymbol(
+        "e_321", [3, 2, 1], [], eleptical_ones, dual_ones)
+
+    e_423 = CliffordGeometrySymbol(
+        "e_423", [2, 3], [4], eleptical_ones, dual_ones)
+    e_431 = CliffordGeometrySymbol(
+        "e_431", [3, 1], [4], eleptical_ones, dual_ones)
+    e_412 = CliffordGeometrySymbol(
+        "e_412", [1, 2], [4], eleptical_ones, dual_ones)
+
+    e_4321 = CliffordGeometrySymbol(
+        "e_4321", [3, 2, 1], [4], eleptical_ones, dual_ones)
+
+    canonical_formes = {
+        (1, 2, 3): (3, 2, 1),
+        (2, 3): (2, 3),
+        (1, 3): (3, 1),
+        (1, 2): (1, 2),
+        (1,): (1,),
+        (2,): (2,),
+        (3,): (3,),
+        (): ()
+    }
+
+    # canonical_symbols = {
+    #     "e_321": e_321,
+    #     "e_23": e_23,
+    #     "e_12": e_12,
+    #     "e_31": e_31,
+    #     "e_1": e_1,
+    #     "e_2": e_2,
+    #     "e_3": e_3,
+    #     "e": e
+    # }
 
 
 alphabet = [
@@ -206,45 +275,68 @@ e = CliffordAlgebra.e
 e_1 = CliffordAlgebra.e_1
 e_2 = CliffordAlgebra.e_2
 e_3 = CliffordAlgebra.e_3
-e_12 = CliffordAlgebra.e_12
 e_23 = CliffordAlgebra.e_23
 e_31 = CliffordAlgebra.e_31
+e_12 = CliffordAlgebra.e_12
 e_321 = CliffordAlgebra.e_321
 
-earr = [e, e_1, e_2, e_3, e_12, e_23, e_31, e_321]
+earr = [e, e_1, e_2, e_3, e_23, e_31, e_12,   e_321]
+marr = [e.multer, e_1.multer, e_2.multer, e_3.multer,
+        e_23.multer, e_31.multer,  e_12.multer,  e_321.multer]
+
+e = CliffordAlgebra301.e
+e_1 = CliffordAlgebra301.e_1
+e_2 = CliffordAlgebra301.e_2
+e_3 = CliffordAlgebra301.e_3
+e_4 = CliffordAlgebra301.e_4
+e_23 = CliffordAlgebra301.e_23
+e_31 = CliffordAlgebra301.e_31
+e_12 = CliffordAlgebra301.e_12
+e_41 = CliffordAlgebra301.e_41
+e_42 = CliffordAlgebra301.e_42
+e_43 = CliffordAlgebra301.e_43
+e_321 = CliffordAlgebra301.e_321
+e_423 = CliffordAlgebra301.e_423
+e_431 = CliffordAlgebra301.e_431
+e_412 = CliffordAlgebra301.e_412
+e_4321 = CliffordAlgebra301.e_4321
+
+marr2 = [e.multer, e_1.multer, e_2.multer, e_3.multer, e_4.multer,
+         e_23.multer, e_31.multer,  e_12.multer, e_41.multer, e_42.multer, e_43.multer,
+         e_321.multer, e_423.multer, e_431.multer, e_412.multer, e_4321.multer]
 
 
-def print_binary_operation_table(f):
+def print_binary_operation_table(f, arr):
     L = 8
     sys.stdout.write(L*" ")
-    for a in earr:
+    for a in arr:
         s = str(a)
         s = s + " " * (L - len(s))
         sys.stdout.write(s)
     sys.stdout.write("\r\n")
 
-    for a in earr:
+    for a in arr:
         s = str(a)
         s = s + " " * (L - len(s))
         sys.stdout.write(s)
-        for b in earr:
+        for b in arr:
             s = str(f(a, b))
             s = s + " " * (L - len(s))
             sys.stdout.write(s)
         sys.stdout.write("\r\n")
 
 
-def print_unary_operation_table(f):
+def print_unary_operation_table(f, arr):
     L = 8
     sys.stdout.write(L*" ")
-    for a in earr:
+    for a in arr:
         s = str(a)
         s = s + " " * (L - len(s))
         sys.stdout.write(s)
     sys.stdout.write("\r\n")
 
     sys.stdout.write(L*" ")
-    for a in earr:
+    for a in arr:
         s = str(f(a))
         s = s + " " * (L - len(s))
         sys.stdout.write(s)
@@ -253,41 +345,76 @@ def print_unary_operation_table(f):
 
 
 def grade(x):
-    return x.multer.grade()
+    return x.grade()
 
 
 def antigrade(x):
-    return x.multer.antigrade()
+    return x.antigrade()
 
 
 def reverse(x):
-    multer = x.multer.reverse()
-    return multer.symbol()
+    return x.reverse()
 
 
 def prod(x, y):
-    return x*y
-    multer = x.multer.prod(y.multer)
-    return multer.symbol()
+    return x.prod(y)
 
 
 def antiprod(x, y):
-    return x*y
-    multer = x.multer.antiprod(y.multer)
-    return multer.symbol()
+    return x.antiprod(y)
 
 
 print()
-print_unary_operation_table(lambda x: grade(x))
+print_unary_operation_table(lambda x: grade(x), marr)
 
 print()
-print_unary_operation_table(lambda x: antigrade(x))
+print_unary_operation_table(lambda x: antigrade(x), marr)
 
 print()
-print_unary_operation_table(lambda x: reverse(x))
+print_unary_operation_table(lambda x: reverse(x), marr)
 
 print()
-print_binary_operation_table(lambda x, y: prod(x, y))
+print_binary_operation_table(lambda x, y: prod(x, y), marr)
 
 print()
-print_binary_operation_table(lambda x, y: antiprod(x, y))
+print_binary_operation_table(lambda x, y: antiprod(x, y), marr)
+
+
+def collect_results_of_binary_operation(f, arr):
+    dct = {}
+    for a in arr:
+        dct[a.symbol_name()] = []
+
+    for a in arr:
+        for b in arr:
+            res = f(a, b)
+            sign = res.sign()
+            dct[res.symbol_name()].append((a, b, sign))
+
+    return dct
+
+
+def make_binary_function(f, name, type, arr):
+    dct = collect_results_of_binary_operation(lambda x, y: prod(x, y), arr)
+    s = ""
+    s += f"{type} {name}({type} a, {type} b) {{\r\n"
+    for k, v in dct.items():
+        s += f"    auto {k} = "
+        for a, b, sign in v:
+            if sign == -1:
+                s += "-"
+            s += f"a.{a.symbol_name()}*b.{b.symbol_name()} + "
+        s += "0; \r\n"
+    sss = ", ".join(dct.keys())
+    s += f"    {type}({sss});\r\n"
+    s += "}"
+    return s
+
+
+s = make_binary_function(lambda x, y: prod(
+    x, y), "prod", "maho::multivector300", marr)
+
+print()
+s = make_binary_function(lambda x, y: prod(
+    x, y), "prod", "maho::multivector301", marr2)
+print(s)
