@@ -406,19 +406,24 @@ def make_binary_function(f, name, type, arr):
     s += f"{type} {name}({type} a, {type} b) {{\r\n"
     for k, v in dct.items():
         s += f"    auto {k} = "
+        sss = []
         for a, b, sign in v:
+            l = ""
             if sign == -1:
-                s += "-"
-            s += f"a.{a.symbol_name()}*b.{b.symbol_name()} + "
-        s += "0; \r\n"
+                l += "-"
+            l += f"a.{a.symbol_name()}*b.{b.symbol_name()}"
+            sss.append(l)
+        s += " + ".join(sss)
+        s += "; \r\n"
     sss = ", ".join(dct.keys())
-    s += f"    {type}({sss});\r\n"
+    s += f"    return {{{sss}}};\r\n"
     s += "}"
     return s
 
 
 s = make_binary_function(lambda x, y: prod(
     x, y), "prod", "maho::multivector300", marr)
+print(s)
 
 print()
 s = make_binary_function(lambda x, y: prod(
