@@ -51,11 +51,15 @@ class ElepticalArray:
 
 
 class CliffordMulter:
-    def __init__(self, eleptical_ones=[], dual_ones=[],  total_elipse=[], total_dual=[], negative=False):
+    def __init__(self, eleptical_ones=[], dual_ones=[],  total_elipse=[], total_dual=[], negative=False, null=False):
         self.dual_ones = dual_ones
         self.eleptical_ones = ElepticalArray(eleptical_ones, negative)
         self.total_elipse = total_elipse
         self.total_dual = total_dual
+        self.null = null
+
+    def is_null(self):
+        return self.null
 
     def sign(self):
         return -1 if self.eleptical_ones.negative else 1
@@ -79,7 +83,7 @@ class CliffordMulter:
     def prod(self, other):
         for x in self.dual_ones:
             for y in other.dual_ones:
-                return CliffordMulter()
+                return CliffordMulter(null=True)
 
         dual_ones = self.dual_ones + other.dual_ones
 
@@ -388,6 +392,8 @@ def collect_results_of_binary_operation(f, arr):
     for a in arr:
         for b in arr:
             res = f(a, b)
+            if res.is_null():
+                continue
             sign = res.sign()
             dct[res.symbol_name()].append((a, b, sign))
 
