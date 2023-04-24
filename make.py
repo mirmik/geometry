@@ -8,6 +8,22 @@ import sys
 
 licant.execute("maho.g.py")
 
+licant.cxx_static_and_shared(
+    name="libraries",
+    static_lib="libmaho.a",
+    shared_lib="libmaho.so",
+    mdepends= [
+        "maho",
+    ],
+    defines=[],
+    cxx_flags="",
+    cc_flags="",
+    ld_flags="",
+    cxxstd="c++17",
+    ccstd="c11",
+    optimize="-O3"
+)
+
 licant.cxx_application("runtests",
                        sources=[
                            "tests/*.cpp",
@@ -21,12 +37,13 @@ licant.cxx_application("runtests",
                        include_paths=["./tests", "."],
                        )
 
-# licant.install.install_library(
-#    tgt="install",
-#    uninstall="uninstall",
-#    libtgt=["libigris.so", "libigris.a"],
-#    hroot="igris",
-#    headers="igris")
-#licant.fileset("all", targets=["runtests", "libigris.so", "libigris.a"])
+licant.install.install_library(
+    tgt="install",
+    uninstall="uninstall",
+    libtgt=["libmaho.so", "libmaho.a"],
+    hroot="maho",
+    headers="maho")
 
-licant.ex("runtests")
+licant.fileset("all", targets=["runtests", "libmaho.so", "libmaho.a"])
+
+licant.ex("all")
