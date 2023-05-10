@@ -29,10 +29,9 @@ namespace maho
                 : _u(u), _xyz(xyz), _w(w)
             {
             }
-            constexpr sphere3(const sphere3 &s)
-                : _u(s._u), _xyz(s._xyz), _w(s._w)
-            {
-            }
+
+            constexpr sphere3(const sphere3 &s) = default;
+            constexpr sphere3 &operator=(const sphere3 &s) = default;
 
             // Constructs a sphere from a center and a radius.
             static constexpr sphere3 construct(const vec3<T> &center, T radius)
@@ -40,14 +39,6 @@ namespace maho
                 auto c2 = linalg::length2(center);
                 auto r2 = radius * radius;
                 return sphere3(-1, center, -(c2 - r2) / 2);
-            }
-
-            constexpr sphere3 &operator=(const sphere3 &s)
-            {
-                _xyz = s._xyz;
-                _w = s._w;
-                _u = s._u;
-                return *this;
             }
 
             constexpr vec3<T> xyz() const { return _xyz; }
